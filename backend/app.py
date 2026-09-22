@@ -11,7 +11,6 @@ def conectar():
 
 
 
-
 @app.route("/donos", methods=["GET"])
 def listar_donos():
     conexao = conectar()
@@ -135,7 +134,6 @@ def remover_dono(dono_id):
 
     return jsonify({"mensagem": "Dono removido com sucesso"})
 
---
 
 @app.route("/pets", methods=["GET"])
 def listar_pets():
