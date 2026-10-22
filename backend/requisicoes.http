@@ -1,85 +1,169 @@
 
-### Listar todos os donos
-GET http://localhost:5000/donos
+@baseUrl = http://127.0.0.1:5000
 
-### Buscar dono pelo ID
-GET http://localhost:5000/donos/1
 
-### Cadastrar dono
-POST http://localhost:5000/donos
+
+GET {{baseUrl}}/donos
+
+
+### BUSCAR DONO PELO ID
+
+GET {{baseUrl}}/donos/1
+
+
+### CADASTRAR DONO
+
+# @name criarDono
+POST {{baseUrl}}/donos
 Content-Type: application/json
 
 {
-    "nome": "Diego Souza",
-    "telefone": "45999110004"
+    "nome": "Joao Silva",
+    "telefone": "45999998888"
 }
 
-### Atualizar dono
-PUT http://localhost:5000/donos/1
+
+### ATUALIZAR DONO CRIADO
+
+PUT {{baseUrl}}/donos/{{criarDono.response.body.$.id}}
 Content-Type: application/json
 
 {
-    "nome": "Ana Paula Ribeiro da Silva",
-    "telefone": "45999110001"
+    "nome": "Joao Pedro",
+    "telefone": "45988887777"
 }
 
-### Remover dono
-DELETE http://localhost:5000/donos/4
+
+### =====================================
+### LISTAR TODOS OS PETS
+### =====================================
+
+GET {{baseUrl}}/pets
 
 
-### Listar todos os pets
-GET http://localhost:5000/pets
+### BUSCAR PET PELO ID
 
-### Filtrar pets por dono
-GET http://localhost:5000/pets?dono_id=1
+GET {{baseUrl}}/pets/1
 
-### Buscar pet pelo ID
-GET http://localhost:5000/pets/1
 
-### Cadastrar pet
-POST http://localhost:5000/pets
+### FILTRAR PETS PELO DONO
+
+GET {{baseUrl}}/pets?dono_id=1
+
+
+### CADASTRAR NOVO PET
+
+# @name criarPet
+POST {{baseUrl}}/pets
 Content-Type: application/json
 
 {
-    "nome": "Bidu",
+    "nome": "Bob",
     "especie": "cachorro",
-    "idade": 2,
+    "idade": 3,
     "dono_id": 1
 }
 
-### Atualizar pet
-PUT http://localhost:5000/pets/1
+
+### ATUALIZAR PET CRIADO
+
+PUT {{baseUrl}}/pets/{{criarPet.response.body.$.id}}
 Content-Type: application/json
 
 {
-    "nome": "Rex",
+    "nome": "Bob Atualizado",
     "especie": "cachorro",
-    "idade": 5,
+    "idade": 4,
     "dono_id": 1
 }
 
-### Remover pet
-DELETE http://localhost:5000/pets/5
 
+### TESTAR DONO INEXISTENTE
 
-### DESAFIO: Dono inexistente (404)
-POST http://localhost:5000/pets
+POST {{baseUrl}}/pets
 Content-Type: application/json
 
 {
     "nome": "Teste",
     "especie": "gato",
-    "idade": 1,
+    "idade": 2,
     "dono_id": 999
 }
 
-### Pet inexistente (404)
-GET http://localhost:5000/pets/999
 
-### Cadastro incompleto (400)
-POST http://localhost:5000/pets
-Content-Type: application/json
+### =====================================
+### AULA 03 - EXERCICIO 1
+### =====================================
 
-{
-    "nome": "Sem dono"
-}
+### VERIFICAR DONO_NOME NO JSON
+
+GET {{baseUrl}}/pets
+
+
+
+
+### LISTAR PETS DO DONO 1
+
+GET {{baseUrl}}/donos/1/pets
+
+
+### LISTAR PETS DO DONO 2
+
+GET {{baseUrl}}/donos/2/pets
+
+
+### DONO SEM PETS
+### RETORNA LISTA VAZIA NO BANCO INICIAL
+
+GET {{baseUrl}}/donos/3/pets
+
+
+### DONO INEXISTENTE
+### DEVE RETORNAR 404
+
+GET {{baseUrl}}/donos/99999/pets
+
+
+### =====================================
+### AULA 03 - EXERCICIO 3
+### =====================================
+
+### DONO COM LISTA DE PETS NO JSON
+
+GET {{baseUrl}}/donos/1?incluir_pets=1
+
+
+### OUTRO DONO COM SEUS PETS
+
+GET {{baseUrl}}/donos/2?incluir_pets=1
+
+
+### DONO SEM PETS
+
+GET {{baseUrl}}/donos/3?incluir_pets=1
+
+
+### =====================================
+### TESTAR EXCLUSOES
+### =====================================
+
+### EXCLUIR PET CRIADO
+
+DELETE {{baseUrl}}/pets/{{criarPet.response.body.$.id}}
+
+
+### EXCLUIR DONO CRIADO SEM PETS
+
+DELETE {{baseUrl}}/donos/{{criarDono.response.body.$.id}}
+
+
+### TENTAR EXCLUIR DONO COM PETS
+### DEVE RETORNAR 409
+
+DELETE {{baseUrl}}/donos/1
+
+
+### PET INEXISTENTE
+### DEVE RETORNAR 404
+
+GET {{baseUrl}}/pets/99999
