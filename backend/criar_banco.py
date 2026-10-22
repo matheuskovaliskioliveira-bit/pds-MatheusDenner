@@ -2,6 +2,7 @@
 from app import app, db, Dono, Pet
 
 with app.app_context():
+
     db.create_all()
 
     if Dono.query.first() is None:
@@ -21,10 +22,7 @@ with app.app_context():
             telefone="45999110003"
         )
 
-        db.session.add(ana)
-        db.session.add(bruno)
-        db.session.add(carla)
-
+        db.session.add_all([ana, bruno, carla])
         db.session.commit()
 
         rex = Pet(
@@ -48,21 +46,31 @@ with app.app_context():
             dono_id=bruno.id
         )
 
-        nina = Pet(
-            nome="Nina",
+        mel = Pet(
+            nome="Mel",
             especie="gato",
-            idade=1,
-            dono_id=carla.id
-        )
-
-        pingo = Pet(
-            nome="Pingo",
-            especie="passaro",
             idade=3,
-            dono_id=carla.id
+            dono_id=bruno.id
         )
 
-        db.session.add_all([rex, mimi, thor, nina, pingo])
+        bidu = Pet(
+            nome="Bidu",
+            especie="cachorro",
+            idade=1,
+            dono_id=ana.id
+        )
+
+        db.session.add_all([
+            rex,
+            mimi,
+            thor,
+            mel,
+            bidu
+        ])
+
         db.session.commit()
 
-    print("Banco criado com sucesso.")
+        print("Banco criado e populado com sucesso!")
+
+    else:
+        print("Banco ja possui dados.")
