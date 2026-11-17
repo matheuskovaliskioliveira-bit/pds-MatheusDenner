@@ -2,21 +2,15 @@
 @baseUrl = http://127.0.0.1:5000
 
 
-### =====================================
-### DONOS
-### =====================================
-
-### LISTAR TODOS OS DONOS
 
 GET {{baseUrl}}/donos
 
 
-### BUSCAR DONO PELO ID
 
 GET {{baseUrl}}/donos/1
 
 
-### CADASTRAR DONO
+
 
 # @name criarDono
 POST {{baseUrl}}/donos
@@ -28,7 +22,7 @@ Content-Type: application/json
 }
 
 
-### ATUALIZAR DONO CRIADO
+
 
 PUT {{baseUrl}}/donos/{{criarDono.response.body.$.id}}
 Content-Type: application/json
@@ -39,8 +33,7 @@ Content-Type: application/json
 }
 
 
-### TESTAR DONO COM NOME VAZIO
-### DEVE RETORNAR 400
+
 
 POST {{baseUrl}}/donos
 Content-Type: application/json
@@ -55,22 +48,21 @@ Content-Type: application/json
 ### PETS
 ### =====================================
 
-### LISTAR TODOS OS PETS
+
 
 GET {{baseUrl}}/pets
 
 
-### BUSCAR PET PELO ID
 
 GET {{baseUrl}}/pets/1
 
 
-### FILTRAR PETS PELO DONO
+
 
 GET {{baseUrl}}/pets?dono_id=1
 
 
-### CADASTRAR NOVO PET
+
 
 # @name criarPet
 POST {{baseUrl}}/pets
@@ -84,7 +76,7 @@ Content-Type: application/json
 }
 
 
-### ATUALIZAR PET CRIADO
+
 
 PUT {{baseUrl}}/pets/{{criarPet.response.body.$.id}}
 Content-Type: application/json
@@ -98,8 +90,7 @@ Content-Type: application/json
 
 
 
-### EXERCICIO 3 - IDADE COMO TEXTO
-### DEVE RETORNAR 400
+
 
 POST {{baseUrl}}/pets
 Content-Type: application/json
@@ -112,8 +103,7 @@ Content-Type: application/json
 }
 
 
-### EXERCICIO 3 - IDADE NEGATIVA
-### DEVE RETORNAR 400
+
 
 POST {{baseUrl}}/pets
 Content-Type: application/json
@@ -126,8 +116,7 @@ Content-Type: application/json
 }
 
 
-### EXERCICIO 3 - DONO INEXISTENTE
-### DEVE RETORNAR 400
+
 
 POST {{baseUrl}}/pets
 Content-Type: application/json
@@ -140,8 +129,6 @@ Content-Type: application/json
 }
 
 
-### EXERCICIO 3 - NOME VAZIO
-### DEVE RETORNAR 400
 
 POST {{baseUrl}}/pets
 Content-Type: application/json
@@ -154,8 +141,6 @@ Content-Type: application/json
 }
 
 
-### TESTAR PUT COM IDADE INVALIDA
-### DEVE RETORNAR 400 E NAO ATUALIZAR O PET
 
 PUT {{baseUrl}}/pets/{{criarPet.response.body.$.id}}
 Content-Type: application/json
@@ -168,72 +153,62 @@ Content-Type: application/json
 }
 
 
-### CONFERIR SE OS PETS INVALIDOS NAO FORAM CADASTRADOS
 
 GET {{baseUrl}}/pets
 
 
 
-### VERIFICAR DONO_NOME NO JSON
+
 
 GET {{baseUrl}}/pets
 
 
-### LISTAR PETS DO DONO 1
 
 GET {{baseUrl}}/donos/1/pets
 
 
-### LISTAR PETS DO DONO 2
+
 
 GET {{baseUrl}}/donos/2/pets
 
 
-### DONO SEM PETS
-### RETORNA LISTA VAZIA NO BANCO INICIAL
+
 
 GET {{baseUrl}}/donos/3/pets
 
 
-### DONO INEXISTENTE
-### DEVE RETORNAR 404
+
 
 GET {{baseUrl}}/donos/99999/pets
 
 
-### DONO COM LISTA DE PETS NO JSON
 
 GET {{baseUrl}}/donos/1?incluir_pets=1
 
 
-### OUTRO DONO COM SEUS PETS
 
 GET {{baseUrl}}/donos/2?incluir_pets=1
 
 
-### DONO SEM PETS
 
 GET {{baseUrl}}/donos/3?incluir_pets=1
 
 
 
-### EXCLUIR PET CRIADO
 
 DELETE {{baseUrl}}/pets/{{criarPet.response.body.$.id}}
 
 
-### EXCLUIR DONO CRIADO SEM PETS
+
 
 DELETE {{baseUrl}}/donos/{{criarDono.response.body.$.id}}
 
 
-### TENTAR EXCLUIR DONO COM PETS
-### DEVE RETORNAR 409
+
 
 DELETE {{baseUrl}}/donos/1
 
 
-### PET INEXISTENTE
-### DEVE RETORNAR 404
+
 
 GET {{baseUrl}}/pets/99999
