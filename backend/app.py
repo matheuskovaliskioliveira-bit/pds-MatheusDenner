@@ -55,11 +55,6 @@ class Pet(db.Model):
         }
 
 
-# ============================
-# FUNCOES DE VALIDACAO
-# AULA 05 - VALIDACAO DE DADOS
-# ============================
-
 def validar_dono(dados):
     erros = []
 
@@ -129,9 +124,6 @@ def validar_pet(dados):
     return erros
 
 
-# ============================
-# ROTAS DOS DONOS
-# ============================
 
 @app.route("/donos", methods=["GET"])
 def listar_donos():
@@ -153,7 +145,6 @@ def buscar_dono(dono_id):
 
     resultado = dono.to_dict()
 
-    # Exercicio 3 - incluir os pets do dono
     if request.args.get("incluir_pets") == "1":
         resultado["pets"] = [
             pet.to_dict() for pet in dono.pets
@@ -219,7 +210,7 @@ def remover_dono(dono_id):
             "erro": "Dono nao encontrado"
         }), 404
 
-    # Impede excluir um dono que possui pets
+
     if dono.pets:
         return jsonify({
             "erro": "Dono possui pets cadastrados"
@@ -233,9 +224,7 @@ def remover_dono(dono_id):
     })
 
 
-# ============================
-# ROTAS DOS PETS
-# ============================
+
 
 @app.route("/pets", methods=["GET"])
 def listar_pets():
@@ -341,9 +330,7 @@ def remover_pet(pet_id):
     })
 
 
-# ============================
-# PETS DE UM DONO ESPECIFICO
-# ============================
+
 
 @app.route("/donos/<int:dono_id>/pets", methods=["GET"])
 def listar_pets_do_dono(dono_id):
@@ -359,9 +346,6 @@ def listar_pets_do_dono(dono_id):
     ])
 
 
-# ============================
-# EXECUTAR A APLICACAO
-# ============================
 
 if __name__ == "__main__":
     app.run(debug=True)
